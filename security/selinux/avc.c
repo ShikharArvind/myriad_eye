@@ -398,10 +398,12 @@ static void avc_audit_post_callback(struct audit_buffer *ab, void *a)
 			   ad->selinux_audit_data->slad->tsid,
 			   ad->selinux_audit_data->slad->tclass);
 
-	if (ad->selinux_audit_data->slad->denied) {
-		audit_log_format(ab, " permissive=%u",
-		ad->selinux_audit_data->slad->result ? 0 : 1);
-	}
+
+    if (ad->selinux_audit_data->slad->denied) {
+           audit_log_format(ab, " permissive=%u",
+           ad->selinux_audit_data->slad->result ? 0 : 1);
+    }
+
 }
 
 static noinline int slow_avc_audit(u32 ssid, u32 tsid, u16 tclass,
@@ -429,7 +431,7 @@ static noinline int slow_avc_audit(u32 ssid, u32 tsid, u16 tclass,
 	slad.tsid = tsid;
 	slad.audited = audited;
 	slad.denied = denied;
-	slad.result = result;
+    slad.result = result;
 
 	a->selinux_audit_data->slad = &slad;
 	common_lsm_audit(a, avc_audit_pre_callback, avc_audit_post_callback);
